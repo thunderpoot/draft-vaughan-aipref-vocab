@@ -9,19 +9,19 @@ number:
 date:
 consensus: true
 v: 3
-area: AREA
-workgroup: WG Working Group
+area: ""
+workgroup: "AI Preferences"
 keyword:
  - AI Preferences
  - Opt-Out
  - Vocabulary
 venue:
-  group: WG
-  type: Working Group
-  mail: ai-control@ietf.org
-  arch: https://datatracker.ietf.org/wg/aipref/about/
-  github: thunderpoot/draft-vaughan-aipref-vocab
-  latest: https://example.com/LATEST
+  group: "AI Preferences"
+  type: ""
+  mail: "ai-control@ietf.org"
+  arch: "https://mailarchive.ietf.org/arch/browse/ai-control/"
+  github: "thunderpoot/draft-vaughan-aipref-vocab"
+  latest: "https://thunderpoot.github.io/draft-vaughan-aipref-vocab/draft-vaughan-aipref-vocab.html"
 
 author:
  -
