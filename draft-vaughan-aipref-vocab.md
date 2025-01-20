@@ -3,7 +3,7 @@ title: "Vocabulary for Expressing Content Preferences for AI Training"
 abbrev: "AIPREF Vocab"
 category: info
 
-docname: draft-vaughan-aipref-latest
+docname: draft-vaughan-aipref-vocab-latest
 submissiontype: IETF
 number:
 date:
@@ -31,16 +31,12 @@ author:
 
 normative:
 
-* [RFC8615](https://datatracker.ietf.org/doc/rfc8615/): Well-Known Uniform Resource Identifiers (URIs)
-* [RFC9309](https://datatracker.ietf.org/doc/rfc9309/): Robots Exclusion Protocol
-* [RFC2046](https://datatracker.ietf.org/doc/html/rfc2046): Multipurpose Internet Mail Extensions (MIME) Part two: Media Types
-
 informative:
 
-* [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html): Data elements and interchange formats – Representation of dates and times
-* [ISO 3166](https://www.iso.org/iso-3166-country-codes.html): Codes for the representation of names of countries and their subdivisions
-* [draft-illyes-rep-purpose](https://datatracker.ietf.org/doc/draft-illyes-rep-purpose/): Robots Exclusion Protocol User Agent Purpose Extension
-* [TDMRep](https://www.w3.org/community/reports/tdmrep/CG-FINAL-tdmrep-20240510/): Text and Data Mining Reservation Protocol
+#* [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html): Data elements and interchange formats – Representation of dates and times
+#* [ISO 3166](https://www.iso.org/iso-3166-country-codes.html): Codes for the representation of names of countries and their subdivisions
+#* [draft-illyes-rep-purpose](https://datatracker.ietf.org/doc/draft-illyes-rep-purpose/): Robots Exclusion Protocol User Agent Purpose Extension
+#* [TDMRep](https://www.w3.org/community/reports/tdmrep/CG-FINAL-tdmrep-20240510/): Text and Data Mining Reservation Protocol
 
 
 --- abstract
@@ -106,7 +102,7 @@ Defines the scope of applicability. Refers to the level at which preferences app
 
 Specifies content types the preference applies to.
 
-* **mime\_type**: text, image, video, audio, application, `RFC2046.`
+* **mime\_type**: text, image, video, audio, application, {{!RFC2046}}.
 
 ## Derivative Content
 
@@ -141,77 +137,83 @@ Specifies regions where preferences apply, `ISO 3166-1`.
 
 # Implementation Considerations
 
-Implementing the AI-PREF vocabulary effectively can be accomplished using various mechanisms, depending on the needs and existing infrastructure of content publishers. Approaches include, but are not limited to, using HTTP headers, possible extensions to [RFC9309](https://datatracker.ietf.org/doc/rfc9309/) ([draft-illyes-rep-purpose](https://datatracker.ietf.org/doc/draft-illyes-rep-purpose/)), and (for example) \<meta\> tags and other embedded data (such as EXIF) for sub-document-level control.
+Implementing the AI-PREF vocabulary effectively can be accomplished using various mechanisms, depending on the needs and existing infrastructure of content publishers. Approaches include, but are not limited to, using HTTP headers, possible extensions to {{!RFC9309}} ({{?PURPOSE=I-D.illyes-rep-purpose}}), and (for example) \<meta\> tags and other embedded data (such as EXIF) for sub-document-level control.
 
-1. **HTTP Headers**
+## HTTP Headers
 
 Publishers can use HTTP headers to communicate AI-PREF preferences directly in response to client requests. This approach allows fine-grained control and easy integration into existing server configurations.
 
 **Example header:**
 
-```
+
+~~~ http-message
 AI-PREF: allow_training=true; purpose=generation,classification; retention_period=P3Y6M4DT12H30M5S
-```
+~~~
 
 This header specifies that the content can be used for text generation and classification, with a retention period of 3 years, 6 months, 4 days, 12 hours, 30 minutes, and 5 seconds. The syntax and options should be carefully chosen to ensure compatibility with common web servers and clients.
 
-2. **Robots Exclusion Protocol (REP)**
+## Robots Exclusion Protocol (REP)
 
 For publishers who already use REP (as defined in [RFC9309](https://datatracker.ietf.org/doc/rfc9309/)), extending REP rules to include AI-PREF preferences could be beneficial.
 
-**Example rule:**
+Example rule:
 
-```
+~~~
 User-agent: *
 Allow-Training: non-commercial
 Purpose: embedding, summarisation
-```
+~~~
 
 This REP rule specifies that all user agents are allowed to use the content for non-commercial AI training, limited to embedding and summarisation purposes. Further extensions to REP could specify additional constraints, such as geographic limitations or temporal restrictions.
 
-3. **\<meta\> Tags for Sub-Document Level Control**
+## \<meta\> Tags for Sub-Document Level Control
 
 To specify AI-PREF preferences at the level of individual HTML documents or specific parts of a document, \<meta\> tags and HTML attributes can be used.
 
-**Example \<meta\> tag:**
+Example \<meta\> tag:
 
-```
+
+~~~ html
 <meta name="AI-PREF" content="allow_training=false; retention_period=0">
-```
+~~~
 
-**Example HTML attribute:**
 
-```
+Example HTML attribute:
+
+~~~ html
 <div data-aipref="allow_training=false; retention_period=0">
-```
+~~~
+
 
 The methods above specify that AI training is not allowed for the content of this document, with no retention period permitted. \<meta\> tags can be used to provide  specific content preferences for a specific piece of content, and thus provide a flexible way to manage AI training signals at a more granular level.
 
-4. **“Well-Known” Locations**
+## “Well-Known” Locations
 
-According to [RFC8615](https://datatracker.ietf.org/doc/rfc8615/), “well-known” locations can serve metadata or configuration information that is easily discoverable by automated clients. AI-PREF preferences can be published at a “well-known” URL. There is already the Text and Data Mining Reservation Protocol ([TDMRep](https://www.w3.org/community/reports/tdmrep/CG-FINAL-tdmrep-20240510/)) which has the same or overlapping intent.
+According to {{!RFC8615}}, “well-known” locations can serve metadata or configuration information that is easily discoverable by automated clients. AI-PREF preferences can be published at a “well-known” URL. There is already the Text and Data Mining Reservation Protocol ([TDMRep](https://www.w3.org/community/reports/tdmrep/CG-FINAL-tdmrep-20240510/)) which has the same or overlapping intent.
 
-**Example:**
+Example:
 
-```
+~~~
 https://example.com/.well-known/aipref
-```
+~~~
+
 
 At this URL, a JSON or other structured format can specify AI-PREF preferences for the entire domain or specific content types.
 
-**Example JSON 1:**
+Example JSON 1:
 
-```
+~~~ json
 {
   "allow_training": false,
   "purpose": ["generation"],
   "retention_period": "0"
 }
-```
+~~~
 
-**Example JSON 2:**
 
-```
+Example JSON 2:
+
+~~~ json
 {
   "version": "1.0",
   "resources": [
@@ -239,21 +241,23 @@ At this URL, a JSON or other structured format can specify AI-PREF preferences f
     }
   ]
 }
-```
+~~~
+
 
 This approach simplifies discovery for automated clients and provides a centralised way to communicate content preferences across a domain.
 
-**TDMRep Example:**
+TDMRep Example:
 
 A rightsholder could expose a “well-known” TDMRep file at:
 
-```
+
 https://example.com/.well-known/tdmrep
-```
 
-**Example TDMRep JSON Content:**
 
-```
+Example TDMRep JSON Content:
+
+
+~~~ json
 {
   "version": "1.0",
   "license": "https://example.com/license",
@@ -274,23 +278,27 @@ https://example.com/.well-known/tdmrep
     }
   ]
 }
-```
+~~~
 
-5. **Embedded Metadata**
+
+## Embedded Metadata
 
 Preferences for multimodal data can be embedded directly into file metadata (such as EXIF or XMP) as self-contained control signals.  Compatibility and tamper resistance (e.g. signing) should be considered.
 
-**Example EXIF:**
+Example EXIF:
 
-```
+
+~~~
 AI-Pref-Allow-Training: false
 AI-Pref-Purpose: embedding
 AI-Pref-Retention-Period: 0
-```
+~~~
 
-**Example PDF Metadata Using XMP:**
 
-```
+Example PDF Metadata Using XMP:
+
+
+~~~ xml
 <x:xmpmeta xmlns:x="adobe:ns:meta/">
    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
       <rdf:Description rdf:about=""
@@ -299,13 +307,15 @@ AI-Pref-Retention-Period: 0
       </rdf:Description>
    </rdf:RDF>
 </x:xmpmeta>
-```
+~~~
+
 
 Preferences can be applied at the file level, or even to specific components (e.g., chapters in a PDF or frames in a video).
 
-**Example WEBVTT:**
+Example WEBVTT:
 
-```
+
+~~~
 WEBVTT
 
 00:00:00.000 --> 00:01:00.000
@@ -313,13 +323,14 @@ Usage Preferences: allow_training=true; purpose=generation,classification
 
 00:01:01.000 --> 00:05:00.000
 Usage Preferences: allow_training=false;
-```
+~~~
 
-6. **Content Credentials (ISO 22144\)**
+
+## Content Credentials (ISO 22144\)
 
   TBD
 
-7. **ISCC (ISO 24138\)**
+## ISCC (ISO 24138\)
 
   TBD
 
@@ -327,9 +338,20 @@ Usage Preferences: allow_training=false;
 
 TODO examples
 
-# Appendix
 
-## Table of Preference Signals
+# Security Considerations
+
+This document does not affect the security of the Internet. AI-PREF preferences do not include enforcement mechanisms, which should be addressed by AI model developers. Publishers should be aware that preferences may not prevent unauthorised use and may rely on mutual agreements or legal protections.
+
+
+# IANA Considerations
+
+This document does not require any immediate IANA actions but may suggest future registry entries for the vocabulary terms to support interoperability.
+
+
+--- back
+
+# Table of Preference Signals {#t-signals}
 
 This table defines terms and values that specify metadata preferences for the use of content in AI training. Each term includes a description of its purpose and example values:
 
@@ -349,18 +371,6 @@ This table defines terms and values that specify metadata preferences for the us
 | `geo_limitations` | Location codes, **ISO 3166** | Specifies geographic regions where training permissions apply | `geo_limitations: EU, US` |
 
 
-
-# Security Considerations
-
-This document does not affect the security of the Internet. AI-PREF preferences do not include enforcement mechanisms, which should be addressed by AI model developers. Publishers should be aware that preferences may not prevent unauthorised use and may rely on mutual agreements or legal protections.
-
-
-# IANA Considerations
-
-This document does not require any immediate IANA actions but may suggest future registry entries for the vocabulary terms to support interoperability.
-
-
---- back
 
 # Acknowledgments
 {:numbered="false"}
