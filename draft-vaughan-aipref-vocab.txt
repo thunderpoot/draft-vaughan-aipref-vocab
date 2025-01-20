@@ -2,7 +2,7 @@
 
 
 
-WG Working Group                                              T. Vaughan
+AI Preferences                                                T. Vaughan
 Internet-Draft                                   Common Crawl Foundation
 Intended status: Informational                           20 January 2025
 Expires: 24 July 2025
@@ -27,13 +27,14 @@ About This Document
    This note is to be removed before publishing as an RFC.
 
    The latest revision of this draft can be found at
-   https://example.com/LATEST.  Status information for this document may
+   https://thunderpoot.github.io/draft-vaughan-aipref-vocab/draft-
+   vaughan-aipref-vocab.html.  Status information for this document may
    be found at https://datatracker.ietf.org/doc/draft-vaughan-aipref-
    vocab/.
 
-   Discussion of this document takes place on the WG Working Group
-   mailing list (mailto:ai-control@ietf.org), which is archived at
-   https://datatracker.ietf.org/wg/aipref/about/.  Subscribe at
+   Discussion of this document takes place on the AI Preferences mailing
+   list (mailto:ai-control@ietf.org), which is archived at
+   https://mailarchive.ietf.org/arch/browse/ai-control/.  Subscribe at
    https://www.ietf.org/mailman/listinfo/ai-control/.
 
    Source for this draft and an issue tracker can be found at
@@ -90,7 +91,7 @@ Table of Contents
      5.1.  HTTP Headers
      5.2.  Robots Exclusion Protocol (REP)
      5.3.  <meta> Tags for Sub-Document Level Control
-     5.4.  “Well-Known” Locations
+     5.4.  "Well-Known" Locations
      5.5.  Embedded Metadata
      5.6.  Content Credentials (ISO 22144)
      5.7.  ISCC (ISO 24138)
@@ -292,11 +293,11 @@ Table of Contents
    specific piece of content, and thus provide a flexible way to manage
    AI training signals at a more granular level.
 
-5.4.  “Well-Known” Locations
+5.4.  "Well-Known" Locations
 
-   According to [RFC8615], “well-known” locations can serve metadata or
+   According to [RFC8615], "well-known" locations can serve metadata or
    configuration information that is easily discoverable by automated
-   clients.  AI-PREF preferences can be published at a “well-known” URL.
+   clients.  AI-PREF preferences can be published at a "well-known" URL.
    There is already the Text and Data Mining Reservation Protocol
    (TDMRep (https://www.w3.org/community/reports/tdmrep/CG-FINAL-tdmrep-
    20240510/)) which has the same or overlapping intent.
@@ -351,7 +352,7 @@ Table of Contents
 
    TDMRep Example:
 
-   A rightsholder could expose a “well-known” TDMRep file at:
+   A rightsholder could expose a "well-known" TDMRep file at:
 
    https://example.com/.well-known/tdmrep
 
