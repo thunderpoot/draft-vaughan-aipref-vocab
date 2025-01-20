@@ -3,7 +3,7 @@ title: "Vocabulary for Expressing Content Preferences for AI Training"
 abbrev: "AIPREF Vocab"
 category: info
 
-docname: draft-vaughan-aipref-latest
+docname: draft-vaughan-aipref-vocab-latest
 submissiontype: IETF
 number:
 date:
