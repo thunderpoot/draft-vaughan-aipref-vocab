@@ -187,9 +187,9 @@ Example HTML attribute:
 
 The methods above specify that AI training is not allowed for the content of this document, with no retention period permitted. \<meta\> tags can be used to provide  specific content preferences for a specific piece of content, and thus provide a flexible way to manage AI training signals at a more granular level.
 
-## “Well-Known” Locations
+## "Well-Known" Locations
 
-According to {{!RFC8615}}, “well-known” locations can serve metadata or configuration information that is easily discoverable by automated clients. AI-PREF preferences can be published at a “well-known” URL. There is already the Text and Data Mining Reservation Protocol ([TDMRep](https://www.w3.org/community/reports/tdmrep/CG-FINAL-tdmrep-20240510/)) which has the same or overlapping intent.
+According to {{!RFC8615}}, "well-known" locations can serve metadata or configuration information that is easily discoverable by automated clients. AI-PREF preferences can be published at a "well-known" URL. There is already the Text and Data Mining Reservation Protocol ([TDMRep](https://www.w3.org/community/reports/tdmrep/CG-FINAL-tdmrep-20240510/)) which has the same or overlapping intent.
 
 Example:
 
@@ -248,7 +248,7 @@ This approach simplifies discovery for automated clients and provides a centrali
 
 TDMRep Example:
 
-A rightsholder could expose a “well-known” TDMRep file at:
+A rightsholder could expose a "well-known" TDMRep file at:
 
 
 https://example.com/.well-known/tdmrep
