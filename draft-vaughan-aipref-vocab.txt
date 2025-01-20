@@ -1,0 +1,591 @@
+
+
+
+
+WG Working Group                                              T. Vaughan
+Internet-Draft                                   Common Crawl Foundation
+Intended status: Informational                           20 January 2025
+Expires: 24 July 2025
+
+
+     Vocabulary for Expressing Content Preferences for AI Training
+                   draft-vaughan-aipref-vocab-latest
+
+Abstract
+
+   This document proposes a vocabulary for expressing content
+   preferences for rightsholders who wish to manage the use of their
+   content in AI training.  This vocabulary allows publishers to express
+   preferences through metadata or content-delivery protocols.  The
+   vocabulary can be applied at different levels of granularity and
+   incorporates preferences for permissions, usage scope, and data
+   retention, providing a foundation for interoperability across various
+   Internet protocols.
+
+About This Document
+
+   This note is to be removed before publishing as an RFC.
+
+   The latest revision of this draft can be found at
+   https://example.com/LATEST.  Status information for this document may
+   be found at https://datatracker.ietf.org/doc/draft-vaughan-aipref-
+   vocab/.
+
+   Discussion of this document takes place on the WG Working Group
+   mailing list (mailto:ai-control@ietf.org), which is archived at
+   https://datatracker.ietf.org/wg/aipref/about/.  Subscribe at
+   https://www.ietf.org/mailman/listinfo/ai-control/.
+
+   Source for this draft and an issue tracker can be found at
+   https://github.com/thunderpoot/draft-vaughan-aipref-vocab.
+
+Status of This Memo
+
+   This Internet-Draft is submitted in full conformance with the
+   provisions of BCP 78 and BCP 79.
+
+   Internet-Drafts are working documents of the Internet Engineering
+   Task Force (IETF).  Note that other groups may also distribute
+   working documents as Internet-Drafts.  The list of current Internet-
+   Drafts is at https://datatracker.ietf.org/drafts/current/.
+
+   Internet-Drafts are draft documents valid for a maximum of six months
+   and may be updated, replaced, or obsoleted by other documents at any
+   time.  It is inappropriate to use Internet-Drafts as reference
+   material or to cite them other than as "work in progress."
+
+   This Internet-Draft will expire on 24 July 2025.
+
+Copyright Notice
+
+   Copyright (c) 2025 IETF Trust and the persons identified as the
+   document authors.  All rights reserved.
+
+   This document is subject to BCP 78 and the IETF Trust's Legal
+   Provisions Relating to IETF Documents (https://trustee.ietf.org/
+   license-info) in effect on the date of publication of this document.
+   Please review these documents carefully, as they describe your rights
+   and restrictions with respect to this document.  Code Components
+   extracted from this document must include Revised BSD License text as
+   described in Section 4.e of the Trust Legal Provisions and are
+   provided without warranty as described in the Revised BSD License.
+
+Table of Contents
+
+   1.  Introduction
+   2.  Conventions and Definitions
+   3.  Scope
+   4.  Vocabulary Elements / Preference Signals
+     4.1.  Permission
+     4.2.  Purpose
+     4.3.  Temporal Restrictions
+     4.4.  Content-Specific Granularity
+     4.5.  Content Type
+     4.6.  Derivative Content
+     4.7.  Data Retention
+     4.8.  Preference Persistence
+     4.9.  Precedence
+     4.10. Geographic Restrictions
+   5.  Implementation Considerations
+     5.1.  HTTP Headers
+     5.2.  Robots Exclusion Protocol (REP)
+     5.3.  <meta> Tags for Sub-Document Level Control
+     5.4.  “Well-Known” Locations
+     5.5.  Embedded Metadata
+     5.6.  Content Credentials (ISO 22144)
+     5.7.  ISCC (ISO 24138)
+   6.  Example Usage Scenarios
+   7.  Security Considerations
+   8.  IANA Considerations
+   9.  References
+     9.1.  Normative References
+     9.2.  Informative References
+   Appendix A.  Table of Preference Signals
+   Acknowledgments
+   Author's Address
+
+1.  Introduction
+
+   As AI models become more reliant on large-scale data (driven by
+   scaling laws that link model performance to dataset size), content
+   publishers seek ways to control how their content is used in training
+   these models.  This draft provides a vocabulary that enables
+   publishers to signal preferences for AI training concerning their
+   content.
+
+2.  Conventions and Definitions
+
+   The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+   "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
+   "OPTIONAL" in this document are to be interpreted as described in
+   BCP 14 [RFC2119] [RFC8174] when, and only when, they appear in all
+   capitals, as shown here.
+
+3.  Scope
+
+   The AI-PREF vocabulary is limited to expressing content preferences
+   for AI training and does not include enforcement mechanisms or client
+   authentication.  Default opt-in or opt-out statuses are beyond the
+   scope of this proposal, as it focuses solely on establishing a
+   standard for signalling explicit preferences.  In cases where no
+   preferences are signalled, the decision on whether this constitutes
+   an opt-in or opt-out should be determined at the policy level
+   downstream.
+
+   It is important to note that preference signals are advisory.
+
+4.  Vocabulary Elements / Preference Signals
+
+4.1.  Permission
+
+   Basic indicators of whether content can be used for AI training.
+
+   *  *allow_training*: Boolean
+
+   *  *restricted_training:* public, non-commercial, internal, licensed
+
+4.2.  Purpose
+
+   Defines acceptable uses in training.
+
+   *  *purpose*: String:
+
+      -  *generation*: Creating models that are capable of generating
+         content
+
+      -  *embedding*: Converting content to vector representations
+
+         o  *classification*: Categorising or labelling content
+
+         o  *summary*: Creating condensed versions of content
+
+         o  *paraphrase*: Creating derivative versions of content
+
+         o  *quotation*: Repetition of a passage or fragment of original
+            content
+
+         o  *translation*: Converting content between languages
+
+4.3.  Temporal Restrictions
+
+   Specifies the date range for training use.
+
+   *  *effective_date*: ISO 8601 Date string
+
+   *  *expiration_date*: ISO 8601 Date string
+
+4.4.  Content-Specific Granularity
+
+   Defines the scope of applicability.  Refers to the level at which
+   preferences apply within the content.
+
+   *  *scope*: global, content-specific, conditional
+
+4.5.  Content Type
+
+   Specifies content types the preference applies to.
+
+   *  *mime_type*: text, image, video, audio, application, [RFC2046].
+
+4.6.  Derivative Content
+
+   Allows or restricts derivatives like summaries.
+
+   *  *allow_derivatives*: Boolean
+
+   *  *derivative_type*: summary, paraphrase, translation
+
+4.7.  Data Retention
+
+   Defines content retention period post-training.
+
+   *  *retention_period*: ISO 8601 Duration string (e.g.,
+      P3Y6M4DT12H30M5S)
+
+4.8.  Preference Persistence
+
+   Indicates if preferences should persist in derived datasets, or be
+   optional.  A derived dataset is the result of processing,
+   transforming, or extracting information from the original source,
+   such as aggregated statistics and summaries, or subsets of data.
+
+   *  *metadata_persistence*: Boolean
+
+4.9.  Precedence
+
+   Conflicts should be resolved by assigning precedence values (e.g.,
+   high, medium, low) to rules, with a defined hierarchy that allows
+   content producers to override publishers, domain operators, and
+   others as necessary.
+
+   *  *precedence:* Sets priority when preferences conflict with other
+      layered preferences.
+
+4.10.  Geographic Restrictions
+
+   Specifies regions where preferences apply, ISO 3166-1.
+
+   *  *geo_limitations:* Specifies geographic regions where training
+      permissions apply.
+
+5.  Implementation Considerations
+
+   Implementing the AI-PREF vocabulary effectively can be accomplished
+   using various mechanisms, depending on the needs and existing
+   infrastructure of content publishers.  Approaches include, but are
+   not limited to, using HTTP headers, possible extensions to [RFC9309]
+   ([PURPOSE]), and (for example) <meta> tags and other embedded data
+   (such as EXIF) for sub-document-level control.
+
+5.1.  HTTP Headers
+
+   Publishers can use HTTP headers to communicate AI-PREF preferences
+   directly in response to client requests.  This approach allows fine-
+   grained control and easy integration into existing server
+   configurations.
+
+   *Example header:*
+
+   AI-PREF: allow_training=true; purpose=generation,classification; retention_period=P3Y6M4DT12H30M5S
+
+   This header specifies that the content can be used for text
+   generation and classification, with a retention period of 3 years, 6
+   months, 4 days, 12 hours, 30 minutes, and 5 seconds.  The syntax and
+   options should be carefully chosen to ensure compatibility with
+   common web servers and clients.
+
+5.2.  Robots Exclusion Protocol (REP)
+
+   For publishers who already use REP (as defined in RFC9309
+   (https://datatracker.ietf.org/doc/rfc9309/)), extending REP rules to
+   include AI-PREF preferences could be beneficial.
+
+   Example rule:
+
+   User-agent: *
+   Allow-Training: non-commercial
+   Purpose: embedding, summarisation
+
+   This REP rule specifies that all user agents are allowed to use the
+   content for non-commercial AI training, limited to embedding and
+   summarisation purposes.  Further extensions to REP could specify
+   additional constraints, such as geographic limitations or temporal
+   restrictions.
+
+5.3.  <meta> Tags for Sub-Document Level Control
+
+   To specify AI-PREF preferences at the level of individual HTML
+   documents or specific parts of a document, <meta> tags and HTML
+   attributes can be used.
+
+   Example <meta> tag:
+
+   <meta name="AI-PREF" content="allow_training=false; retention_period=0">
+
+   Example HTML attribute:
+
+   <div data-aipref="allow_training=false; retention_period=0">
+
+   The methods above specify that AI training is not allowed for the
+   content of this document, with no retention period permitted. <meta>
+   tags can be used to provide specific content preferences for a
+   specific piece of content, and thus provide a flexible way to manage
+   AI training signals at a more granular level.
+
+5.4.  “Well-Known” Locations
+
+   According to [RFC8615], “well-known” locations can serve metadata or
+   configuration information that is easily discoverable by automated
+   clients.  AI-PREF preferences can be published at a “well-known” URL.
+   There is already the Text and Data Mining Reservation Protocol
+   (TDMRep (https://www.w3.org/community/reports/tdmrep/CG-FINAL-tdmrep-
+   20240510/)) which has the same or overlapping intent.
+
+   Example:
+
+   https://example.com/.well-known/aipref
+
+   At this URL, a JSON or other structured format can specify AI-PREF
+   preferences for the entire domain or specific content types.
+
+   Example JSON 1:
+
+   {
+     "allow_training": false,
+     "purpose": ["generation"],
+     "retention_period": "0"
+   }
+
+   Example JSON 2:
+
+   {
+     "version": "1.0",
+     "resources": [
+       {
+         "path": "/videos/tutorial.mp4",
+         "type": "video/mp4",
+         "components": [
+           {
+             "name": "Introduction",
+             "time-range": "00:00:00-00:01:00",
+             "preferences": {
+               "classification": "allowed",
+               "embedding": "allowed"
+             }
+           },
+           {
+             "name": "Main Content",
+             "time-range": "00:01:01-00:05:00",
+             "preferences": {
+               "generation": "prohibited",
+               "summarization": "allowed"
+             }
+           }
+         ]
+       }
+     ]
+   }
+
+   This approach simplifies discovery for automated clients and provides
+   a centralised way to communicate content preferences across a domain.
+
+   TDMRep Example:
+
+   A rightsholder could expose a “well-known” TDMRep file at:
+
+   https://example.com/.well-known/tdmrep
+
+   Example TDMRep JSON Content:
+
+   {
+     "version": "1.0",
+     "license": "https://example.com/license",
+     "contact": {
+       "email": "tdm-support@example.com",
+       "url": "https://example.com/contact"
+     },
+     "resources": [
+       {
+         "path": "/articles/",
+         "type": "text/html",
+         "restriction": "no-crawling"
+       },
+       {
+         "path": "/api/data/",
+         "type": "application/json",
+         "restriction": "license-required"
+       }
+     ]
+   }
+
+5.5.  Embedded Metadata
+
+   Preferences for multimodal data can be embedded directly into file
+   metadata (such as EXIF or XMP) as self-contained control signals.
+   Compatibility and tamper resistance (e.g. signing) should be
+   considered.
+
+   Example EXIF:
+
+   AI-Pref-Allow-Training: false
+   AI-Pref-Purpose: embedding
+   AI-Pref-Retention-Period: 0
+
+   Example PDF Metadata Using XMP:
+
+   <x:xmpmeta xmlns:x="adobe:ns:meta/">
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+         <rdf:Description rdf:about=""
+            xmlns:dc="http://purl.org/dc/elements/1.1/">
+            <dc:Rights>Text mining allowed; Data sharing restricted</dc:Rights>
+         </rdf:Description>
+      </rdf:RDF>
+   </x:xmpmeta>
+
+   Preferences can be applied at the file level, or even to specific
+   components (e.g., chapters in a PDF or frames in a video).
+
+   Example WEBVTT:
+
+WEBVTT
+
+00:00:00.000 --> 00:01:00.000
+Usage Preferences: allow_training=true; purpose=generation,classification
+
+00:01:01.000 --> 00:05:00.000
+Usage Preferences: allow_training=false;
+
+5.6.  Content Credentials (ISO 22144)
+
+   TBD
+
+5.7.  ISCC (ISO 24138)
+
+   TBD
+
+6.  Example Usage Scenarios
+
+   TODO examples
+
+7.  Security Considerations
+
+   This document does not affect the security of the Internet.  AI-PREF
+   preferences do not include enforcement mechanisms, which should be
+   addressed by AI model developers.  Publishers should be aware that
+   preferences may not prevent unauthorised use and may rely on mutual
+   agreements or legal protections.
+
+8.  IANA Considerations
+
+   This document does not require any immediate IANA actions but may
+   suggest future registry entries for the vocabulary terms to support
+   interoperability.
+
+9.  References
+
+9.1.  Normative References
+
+   [RFC2046]  Freed, N. and N. Borenstein, "Multipurpose Internet Mail
+              Extensions (MIME) Part Two: Media Types", RFC 2046,
+              DOI 10.17487/RFC2046, November 1996,
+              <https://www.rfc-editor.org/rfc/rfc2046>.
+
+   [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
+              Requirement Levels", BCP 14, RFC 2119,
+              DOI 10.17487/RFC2119, March 1997,
+              <https://www.rfc-editor.org/rfc/rfc2119>.
+
+   [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
+              2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
+              May 2017, <https://www.rfc-editor.org/rfc/rfc8174>.
+
+   [RFC8615]  Nottingham, M., "Well-Known Uniform Resource Identifiers
+              (URIs)", RFC 8615, DOI 10.17487/RFC8615, May 2019,
+              <https://www.rfc-editor.org/rfc/rfc8615>.
+
+   [RFC9309]  Koster, M., Illyes, G., Zeller, H., and L. Sassman,
+              "Robots Exclusion Protocol", RFC 9309,
+              DOI 10.17487/RFC9309, September 2022,
+              <https://www.rfc-editor.org/rfc/rfc9309>.
+
+9.2.  Informative References
+
+   [PURPOSE]  Illyes, G., "Robots Exclusion Protocol User Agent Purpose
+              Extension", Work in Progress, Internet-Draft, draft-
+              illyes-rep-purpose-00, 18 October 2024,
+              <https://datatracker.ietf.org/doc/html/draft-illyes-rep-
+              purpose-00>.
+
+Appendix A.  Table of Preference Signals
+
+   This table defines terms and values that specify metadata preferences
+   for the use of content in AI training.  Each term includes a
+   description of its purpose and example values:
+
+   +======================+===============+=================+==========================+
+   |Term                  |Values         |Description      |Example                   |
+   +======================+===============+=================+==========================+
+   |allow_training        |Boolean        |Basic indicator  |allow_training: false     |
+   |                      |               |of whether       |                          |
+   |                      |               |content can be   |                          |
+   |                      |               |used for AI      |                          |
+   |                      |               |training         |                          |
+   +----------------------+---------------+-----------------+--------------------------+
+   |purpose               |String:        |Defines          |purpose: classification,  |
+   |                      |generation,    |acceptable       |summarisation             |
+   |                      |classification,|applications for |                          |
+   |                      |summarisation, |training e.g.    |                          |
+   |                      |embedding, etc |fine-tuning,     |                          |
+   |                      |               |classification,  |                          |
+   |                      |               |summarisation,   |                          |
+   |                      |               |etc              |                          |
+   +----------------------+---------------+-----------------+--------------------------+
+   |effective_date        |Date string,   |Start date of    |effective_date:           |
+   |                      |*ISO 8601*     |when permissions |2024-10-30T15:52:55.440238|
+   |                      |               |take effect      |                          |
+   +----------------------+---------------+-----------------+--------------------------+
+   |expiration_date       |Date string,   |Date after which |expiration_date:          |
+   |                      |*ISO 8601*     |permissions no   |2024-10-30T15:52:55.440238|
+   |                      |               |longer apply     |                          |
+   +----------------------+---------------+-----------------+--------------------------+
+   |scope                 |String: global,|Defines whether  |scope: content-specific   |
+   |                      |content-       |the preferences  |                          |
+   |                      |specific,      |apply            |                          |
+   |                      |conditional    |universally, to  |                          |
+   |                      |               |specific content,|                          |
+   |                      |               |or under certain |                          |
+   |                      |               |conditions       |                          |
+   +----------------------+---------------+-----------------+--------------------------+
+   |mime_type             |text, image,   |Specifies the    |mime_type: text, image    |
+   |                      |video, audio   |type(s) of       |                          |
+   |                      |               |content the      |                          |
+   |                      |               |preference       |                          |
+   |                      |               |applies to       |                          |
+   +----------------------+---------------+-----------------+--------------------------+
+   |allow_derivatives     |Boolean        |Indicates whether|allow_derivatives: true   |
+   |                      |               |derivative works |                          |
+   |                      |               |(summaries,      |                          |
+   |                      |               |paraphrasing) are|                          |
+   |                      |               |allowed based on |                          |
+   |                      |               |content          |                          |
+   +----------------------+---------------+-----------------+--------------------------+
+   |derivative_type       |String:        |Lists permissible|derivative_type: summary, |
+   |                      |summary,       |types is         |paraphrase                |
+   |                      |paraphrase,    |allow_derivatives|                          |
+   |                      |translation    |is true          |                          |
+   +----------------------+---------------+-----------------+--------------------------+
+   |retention_period      |Duration       |Specifies how    |P3Y6M4DT12H30M5S          |
+   |                      |string, *ISO   |long content may |representing three years, |
+   |                      |8601*          |be retained after|six months, four days,    |
+   |                      |               |use (e.g. after  |twelve hours, thirty      |
+   |                      |               |training).       |minutes, and five seconds.|
+   +----------------------+---------------+-----------------+--------------------------+
+   |preference_persistence|Boolean        |Whether          |preference_persistence:   |
+   |                      |               |preferences must |true                      |
+   |                      |               |persist with     |                          |
+   |                      |               |derived data,    |                          |
+   |                      |               |boolean for      |                          |
+   |                      |               |either required  |                          |
+   |                      |               |or optional      |                          |
+   +----------------------+---------------+-----------------+--------------------------+
+   |precedence            |String:high,   |Sets priority    |precedence: high          |
+   |                      |medium, low    |when preferences |                          |
+   |                      |               |conflict with    |                          |
+   |                      |               |other layered    |                          |
+   |                      |               |preferences      |                          |
+   +----------------------+---------------+-----------------+--------------------------+
+   |geo_limitations       |Location codes,|Specifies        |geo_limitations: EU, US   |
+   |                      |*ISO 3166*     |geographic       |                          |
+   |                      |               |regions where    |                          |
+   |                      |               |training         |                          |
+   |                      |               |permissions apply|                          |
+   +----------------------+---------------+-----------------+--------------------------+
+
+                                  Table 1
+
+Acknowledgments
+
+   *  Greg Lindahl
+
+   *  Sebastian Nagel
+
+   *  Gary Illyes
+
+   *  Mark Nottingham
+
+   *  Suresh Krishnan
+
+   *  Martin Thomson
+
+   *  Paul Keller
+
+   *  Leonard Rosenthol
+
+   *  Special thanks to the program committee and contributing members
+      of the IAB AI-CONTROL Workshop, and aipref Working Group.
+
+Author's Address
+
+   Thom Vaughan
+   Common Crawl Foundation
+   Email: thom@commoncrawl.org
