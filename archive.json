@@ -1,0 +1,97 @@
+{
+  "magic": "E!vIA5L86J2I",
+  "timestamp": "2025-01-21T00:05:13.200963+00:00",
+  "repo": "thunderpoot/draft-vaughan-aipref-vocab",
+  "labels": [
+    {
+      "name": "bug",
+      "description": "Something isn't working",
+      "color": "d73a4a"
+    },
+    {
+      "name": "documentation",
+      "description": "Improvements or additions to documentation",
+      "color": "0075ca"
+    },
+    {
+      "name": "duplicate",
+      "description": "This issue or pull request already exists",
+      "color": "cfd3d7"
+    },
+    {
+      "name": "enhancement",
+      "description": "New feature or request",
+      "color": "a2eeef"
+    },
+    {
+      "name": "good first issue",
+      "description": "Good for newcomers",
+      "color": "7057ff"
+    },
+    {
+      "name": "help wanted",
+      "description": "Extra attention is needed",
+      "color": "008672"
+    },
+    {
+      "name": "invalid",
+      "description": "This doesn't seem right",
+      "color": "e4e669"
+    },
+    {
+      "name": "question",
+      "description": "Further information is requested",
+      "color": "d876e3"
+    },
+    {
+      "name": "wontfix",
+      "description": "This will not be worked on",
+      "color": "ffffff"
+    }
+  ],
+  "issues": [],
+  "pulls": [
+    {
+      "number": 1,
+      "id": "PR_kwDONrxiTc6IVqVC",
+      "title": "Fixups",
+      "url": "https://github.com/thunderpoot/draft-vaughan-aipref-vocab/pull/1",
+      "state": "MERGED",
+      "author": "martinthomson",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "This should unblock the setup process.",
+      "createdAt": "2025-01-20T11:09:22Z",
+      "updatedAt": "2025-01-20T11:40:04Z",
+      "baseRepository": "thunderpoot/draft-vaughan-aipref-vocab",
+      "baseRefName": "main",
+      "baseRefOid": "1fc8ecad3016a2c19cc25cd40431890199a7cefd",
+      "headRepository": "thunderpoot/draft-vaughan-aipref-vocab",
+      "headRefName": "fixups",
+      "headRefOid": "dbe6a36648cf86b184aba6afc9d07d0974b18e6c",
+      "closedAt": "2025-01-20T11:39:59Z",
+      "mergedAt": "2025-01-20T11:39:59Z",
+      "mergedBy": "thunderpoot",
+      "mergeCommit": {
+        "oid": "2fcb15a838136e71a5bda7ee161e16a875c598fd"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDONrxiTc6Yt37c",
+          "commit": {
+            "abbreviatedOid": "dbe6a36"
+          },
+          "author": "thunderpoot",
+          "authorAssociation": "OWNER",
+          "state": "APPROVED",
+          "body": "Thanks a lot @martinthomson, I owe you one!",
+          "createdAt": "2025-01-20T11:39:50Z",
+          "updatedAt": "2025-01-20T11:39:50Z",
+          "comments": []
+        }
+      ]
+    }
+  ]
+}
