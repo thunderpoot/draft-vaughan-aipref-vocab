@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-08-04T01:24:47.874469+00:00",
+  "timestamp": "2026-08-06T01:27:43.205963+00:00",
   "repo": "thunderpoot/draft-vaughan-aipref-vocab",
   "labels": [
     {
@@ -49,7 +49,39 @@
       "color": "ffffff"
     }
   ],
-  "issues": [],
+  "issues": [
+    {
+      "number": 2,
+      "id": "I_kwDONrxiTc8AAAABLdwPqg",
+      "title": "Offer to fill TODO/TBD sections: usage scenario, Content Credentials, signing",
+      "url": "https://github.com/thunderpoot/draft-vaughan-aipref-vocab/issues/2",
+      "state": "CLOSED",
+      "author": "ReadBridge",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "Hi @thunderpoot \u2014 I've been reading the vocab draft closely; it's a clean, useful piece of work. A few sections are still marked `TODO`/`TBD`, and they land on material I've already built, so I'd like to contribute per CONTRIBUTING.md. Offering here first, so you can say what fits the draft's structure before I open any PRs.\n\nThe vocabulary expresses preferences and is explicit that the signals are advisory. Adjacent to that \u2014 complementary, not competing for scope \u2014 is a question the draft raises in a couple of places: once a preference exists, how does a relying party **verify** a specific grant of it \u2014 resolve the reference, **authenticate the signature**, check revocation as of the moment of use \u2014 and so establish that the grant is authentic, bound to the resource, and still in force? That verification is what my separate individual I-D defines (a different mechanism from *expressing* the preference, hence a separate effort). It deliberately stops short of **authorization** \u2014 who has standing to grant, and whether a given use is permitted \u2014 which stays outside the mechanism. The two layers meet your vocabulary exactly where a preference is bound to a specific resource. Three concrete offers:\n\n**1. `# Example Usage Scenarios` (currently `TODO examples`).**\nA worked, end-to-end scenario: a preference expressed in your vocabulary, then bound to a specific asset as a signed, revocable grant \u2014 expressed as a Verifiable Credential, the approach in `draft-wallace-aipref-grant-binding` \u2014 and verified offline with the open [`content-license-verify`](https://github.com/ReadBridge/content-license-verify) reference verifier. I have self-contained offline fixtures for this already. Additive and low-risk; happy to PR whenever.\n\n**2. `## Content Credentials (ISO 22144)` (currently `TBD`).**\nI can draft this, but I'd flag it for discussion first, because it turns on a design choice: whether a preference is *embedded into* a Content Credentials assertion, or bound as a *separate* record joined to the same bytes by a content hash (with the manifest excluded from that hash, so the two layers stay independent and fail independently). I have a small runnable demo of the second approach \u2014 a mechanism demo only (development signing cert, sandbox issuer) \u2014 it shows verification, not a trust anchor, authorization, or compliance claim. Given the Content Credentials expertise already in your acknowledgments, I'd rather offer this as input and write the section even-handedly across both approaches than drop a unilateral PR.\n\n**3. Embedded Metadata \u2192 \"tamper resistance (e.g. signing) should be considered.\"**\nA sentence or two on what \"signing\" concretely looks like here \u2014 verifiable credentials over a content digest \u2014 if you'd like that fleshed out.\n\nAll of this is offered as illustrative, non-normative input \u2014 a worked example and a design discussion, not a mechanism I'm asking the draft to depend on; the verifiable-grant layer is an individual I-D and shouldn't be load-bearing for yours while it's early. Placement, weight, and wording are entirely yours. I can also help with the ISCC (ISO 24138) stub if useful, though that's further from what I've built.\n\nCheers,\nWallace\n",
+      "createdAt": "2026-08-04T19:56:39Z",
+      "updatedAt": "2026-08-05T10:04:11Z",
+      "closedAt": "2026-08-04T20:22:10Z",
+      "comments": [
+        {
+          "author": "thunderpoot",
+          "authorAssociation": "OWNER",
+          "body": "Thanks Wallace.\n\nUnfortunately this repo is my individual draft, and it's been overtaken by the WG's draft-ietf-aipref-vocab (the Keller/Thomson one, which is now at -06). The TODOs here aren't live any more and wouldn't feed into that document, so I'd hate for you to spend the time on them because it won't go anywhere. A lot of this language has been used to make the current drafts, but it's now basically dead.\n\nSeparately though, what you're saying is about the verification and signing layer (which the WG has deliberately kept out of the vocabulary) and the doc is very clear that it only makes preferences understandable, not enforceable (!!), and there is no recommended security mechanism.  If I were you I'd write a draft for this and submit it as an individual draft, then post about it in the mailing list, that way you'll get more eyes on this and probably more sensible feedback than I'm able to give you \ud83d\ude02 \n\nCheers.",
+          "createdAt": "2026-08-04T20:22:10Z",
+          "updatedAt": "2026-08-04T20:22:10Z"
+        },
+        {
+          "author": "ReadBridge",
+          "authorAssociation": "NONE",
+          "body": "Hi Thom - noted and thanks for the steer - good to know the TODOs here are dead so I don't chase them.\n \nYou've pinned exactly the right seam. As it happens I already have an individual draft on precisely this \u2014 draft-wallace-aipref-grant-binding \u2014 for the verification layer the vocabulary leaves open: -06 notes that associating a preference \"might involve authentication\" but doesn't specify it, so \"no assumptions can be made about the origin of preferences.\" That's the gap it fills.\n\nTo be clear about scope, it's the verifiable layer, not enforcement: it lets a recipient establish that a grant of a preference is authentic, bound to the asset, and still in force \u2014 enforcement stays exactly where -06 puts it, downstream and out of the vocabulary (\"Other mechanisms \u2014 technical, legal, contractual\u2026\").\n\n I'll take your advice and bring it to the list for wider eyes. Appreciate the feedback - and the laugh.\n\nCheers, Wallace",
+          "createdAt": "2026-08-05T10:04:11Z",
+          "updatedAt": "2026-08-05T10:04:11Z"
+        }
+      ]
+    }
+  ],
   "pulls": [
     {
       "number": 1,
